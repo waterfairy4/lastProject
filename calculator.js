@@ -1,136 +1,290 @@
-function add(num1,num2){
-    return num1+num2;
-}
-function subtract(num1,num2){
-    return num1-num2;
-}
-function multiply(num1,num2){
-    return num1*num2;
-}
-function divide(num1,num2){
-    return num1/num2;
-}
-let math={add:add(),subtract:subtract(),multiply:multiply(),divide:divide()};
-let operators={add:"+",subtract:"-",multiply:"*",divide:"/"};
-function operate(operator,num1,num2){
-switch (operator) {
-    case operators.add:
-        return math.add;
-        break;
-    case operators.subtract:
-    return math.subtract;
-    case operators.multiply:
-    return math.multiply;
-    case operators.divide:
-    return math.divide;
-
-    default:"Its not difined please enter another"
-        break;
-}
-}
-const button= document.querySelectorAll("button");
-const buttonAdd=document.querySelector(".buttonAdd");
-const buttonSub=document.querySelector(".buttonSub");
-const buttonMul=document.querySelector(".buttonMul");
-const buttonDiv=document.querySelector(".buttonDiv");
-const buttonCl=document.querySelector(".buttonCl");
-const buttonEq=document.querySelector(".buttonEq");
-let num;
 let num1;
 let num2;
-let op;  
-window.onload = function(){
-    
-        let input=document.querySelector("input");
-        input.addEventListener("keypress",function  (e) {
-            if(e.key==="Enter"){
-                e.preventDefault();
-                document.getElementById("submitButton").click();
-            }
-        });
-
-        document.getElementById("submitButton").onclick= function b(){
-           input =document.querySelector("input").value.trim();
-            console.log(input);
-            num=input;
-            //console.log(num);
-            num1=num;
-            //console.log(num1);
-        }
-        /*if(input!==null && input!==undefined){
-            num1=num;
-            console.log(num);
-        }*/
-        
-        //calculator();
-       /* switch (button) {
-            case operators.add:
-                buttonAdd.addEventListener("click",buttonAddClick);
-                opt=buttonAdd;
+const displayCurrent=document.querySelector(".displayCurrent");
+const displayPrevious=document.querySelector(".displayPrevious");
+const buttons=Array.from((document.querySelectorAll("button")));
+buttons.forEach(button =>{
+    button.addEventListener("click",(e)=>{  
+    switch (e.target.innerHTML) {
+        case "C":
+        displayCurrent.innerHTML="0";
+        displayPrevious.innerHTML="";
+        break;
+        case "CE":
+            if(displayPrevious.innerHTML.length<=1 && displayCurrent.innerHTML.length==1){
+                displayCurrent.innerHTML="0";
+                displayPrevious.innerHTML="";
                 break;
-            case operators.subtract:
-              buttonSub.addEventListener("click",buttonSubClick);
-              op=buttonSub;
-            break;
-            case  operators.multiply:
-              buttonMul.addEventListener("click",buttonMulClick);
-              op=buttonMul;
-            break;
-            case operators.divide:
-              buttonDiv.addEventListener("click",buttonDivClick);
-              op=buttonDiv;
-            break;
-        } */
+            }
+            else if(displayCurrent.innerHTML.length>=2 && displayPrevious.innerHTML.length==0){
+                displayCurrent.innerHTML=displayCurrent.innerHTML.slice(0,-1);
+                break;
+            }
+            else if(displayPrevious.innerHTML.length==2 && (displayPrevious.innerHTML.includes("+")|| displayPrevious.innerHTML.includes("-") || displayPrevious.innerHTML.includes("*")||displayPrevious.innerHTML.includes("/"))){
+                displayCurrent.innerHTML="0";
+                displayPrevious.innerHTML="";
+                break;
+            }
+            else{   
+            if(displayPrevious.innerHTML.includes("+")|| displayPrevious.innerHTML.includes("-") || displayPrevious.innerHTML.includes("*")||displayPrevious.innerHTML.includes("/")){
+                a=displayCurrent.innerHTML.charAt(displayCurrent.innerHTML.length-1)
+                displayCurrent.innerHTML=displayCurrent.innerHTML.slice(0,-2);
+                displayCurrent.innerHTML+=a;
+                displayPrevious.innerHTML=displayPrevious.innerHTML.slice(0,-2);
+                displayPrevious.innerHTML+=a;
+                break;
+            }
+             else{
+                displayPrevious.innerHTML=displayPrevious.innerHTML.slice(0,-1);
+                displayCurrent.innerHTML=displayCurrent.innerHTML.slice(0,-1);
+                break;
+             }
+             }
+         case ".":
+            if(displayCurrent.innerHTML.charAt((displayCurrent.innerHTML.length)-1)=="."){
+                break;
+            }
+            else{
+                displayCurrent.innerHTML+=e.target.innerHTML;
+                break;
+            }
+            case "0":
+                if(displayCurrent.innerHTML=="0"){
+                    break;
+                }
+                else{
+                    displayCurrent.innerHTML+=e.target.innerHTML;
+                    break;
+                }
+            case "00":
+                if(displayCurrent.innerHTML=="0"){
+                    break;
+                }
+                else{
+                    displayCurrent.innerHTML+=e.target.innerHTML;
+                    break;
+                }
+            case "/":
+                if(displayCurrent.innerHTML.charAt((displayCurrent.innerHTML.length)-1)=="/"){
+                    break;
+                }
+                else if(displayCurrent.innerHTML.charAt((displayCurrent.innerHTML.length)-1)=="+" || displayCurrent.innerHTML.charAt((displayCurrent.innerHTML.length)-1)=="-" || displayCurrent.innerHTML.charAt((displayCurrent.innerHTML.length)-1)=="*" ){
+                    displayCurrent.innerHTML=displayCurrent.innerHTML.slice(0,-1);
+                    displayCurrent.innerHTML+=e.target.innerHTML; 
+                    displayPrevious.innerHTML=displayPrevious.innerHTML.slice(0,-1);
+                        displayPrevious.innerHTML+=e.target.innerHTML;
+                    break;
+                }
+                else{
+                    if(displayPrevious.innerHTML.includes("+")|| displayPrevious.innerHTML.includes("-") || displayPrevious.innerHTML.includes("*")||displayPrevious.innerHTML.includes("/")){
+                        displayPrevious.innerHTML+=displayCurrent.innerHTML;
+                        displayCurrent.innerHTML=math(displayPrevious);
+                        displayPrevious.innerHTML=displayCurrent.innerHTML;
+                        displayPrevious.innerHTML+=e.target.innerHTML;
+                        displayCurrent.innerHTML+=e.target.innerHTML;
+                       break;
+                    }
+                    else{
+                        displayPrevious.innerHTML=displayCurrent.innerHTML; 
+                        displayPrevious.innerHTML+=e.target.innerHTML;
+                        displayCurrent.innerHTML+=e.target.innerHTML;
+                        break; 
+                    }
+                }
+                case "*":
+                    if(displayCurrent.innerHTML.charAt((displayCurrent.innerHTML.length)-1)=="*"){
+                        break;
+                    }
+                    else if(displayCurrent.innerHTML.charAt((displayCurrent.innerHTML.length)-1)=="+" || displayCurrent.innerHTML.charAt((displayCurrent.innerHTML.length)-1)=="-" || displayCurrent.innerHTML.charAt((displayCurrent.innerHTML.length)-1)=="/" ){
+                        displayCurrent.innerHTML=displayCurrent.innerHTML.slice(0,-1);
+                        displayCurrent.innerHTML+=e.target.innerHTML; 
+                        displayPrevious.innerHTML=displayPrevious.innerHTML.slice(0,-1);
+                        displayPrevious.innerHTML+=e.target.innerHTML;
+                        break;
+                    }
+                    else{
+                        if(displayPrevious.innerHTML.includes("+")||( displayPrevious.innerHTML.includes("-") && displayPrevious.innerHTML.charAt((displayPrevious.innerHTML.length)-1)=="-") || displayPrevious.innerHTML.includes("*")||displayPrevious.innerHTML.includes("/")) {
+                            displayPrevious.innerHTML+=displayCurrent.innerHTML;
+                            displayCurrent.innerHTML=math(displayPrevious);
+                            displayPrevious.innerHTML=displayCurrent.innerHTML;
+                            displayPrevious.innerHTML+=e.target.innerHTML;
+                            displayCurrent.innerHTML+=e.target.innerHTML;
+                           break;
+                        }
+                        else{
+                            displayPrevious.innerHTML=displayCurrent.innerHTML; 
+                            displayPrevious.innerHTML+=e.target.innerHTML;
+                            displayCurrent.innerHTML+=e.target.innerHTML;
+                            break; 
+                        }
+                    }
+                    case "-":
+                        if(displayCurrent.innerHTML.charAt((displayCurrent.innerHTML.length)-1)=="-"){
+                            break;
+                        }
+                        else if(displayCurrent.innerHTML.charAt((displayCurrent.innerHTML.length)-1)=="+" || displayCurrent.innerHTML.charAt((displayCurrent.innerHTML.length)-1)=="*" || displayCurrent.innerHTML.charAt((displayCurrent.innerHTML.length)-1)=="/" ){
+                            displayCurrent.innerHTML=displayCurrent.innerHTML.slice(0,-1);
+                            displayCurrent.innerHTML+=e.target.innerHTML; 
+                            displayPrevious.innerHTML=displayPrevious.innerHTML.slice(0,-1);
+                        displayPrevious.innerHTML+=e.target.innerHTML;
+                            break;
+                        }
+                        else{
+                            if(displayPrevious.innerHTML.includes("+")|| displayPrevious.innerHTML.includes("-") || displayPrevious.innerHTML.includes("*")||displayPrevious.innerHTML.includes("/")){
+                                displayPrevious.innerHTML+=displayCurrent.innerHTML;
+                                displayCurrent.innerHTML=math(displayPrevious);
+                                displayPrevious.innerHTML=displayCurrent.innerHTML;
+                                displayPrevious.innerHTML+=e.target.innerHTML;
+                                displayCurrent.innerHTML+=e.target.innerHTML;
+                               break;
+                            }
+                            else{
+                                displayPrevious.innerHTML=displayCurrent.innerHTML; 
+                                displayPrevious.innerHTML+=e.target.innerHTML;
+                                displayCurrent.innerHTML+=e.target.innerHTML;
+                                break; 
+                            } 
+                        }
+                        case "+":
+                            if(displayCurrent.innerHTML.charAt((displayCurrent.innerHTML.length)-1)=="+"){
+                                break;
+                            }
+                            else if(displayCurrent.innerHTML.charAt((displayCurrent.innerHTML.length)-1)=="-" || displayCurrent.innerHTML.charAt((displayCurrent.innerHTML.length)-1)=="*" || displayCurrent.innerHTML.charAt((displayCurrent.innerHTML.length)-1)=="/" ){
+                                displayCurrent.innerHTML=displayCurrent.innerHTML.slice(0,-1);
+                                displayCurrent.innerHTML+=e.target.innerHTML;
+                                displayPrevious.innerHTML=displayPrevious.innerHTML.slice(0,-1);
+                                displayPrevious.innerHTML+=e.target.innerHTML; 
+                                break;
+                            }
+                            else{
+                                if(displayPrevious.innerHTML.charAt(displayPrevious.innerHTML.length-1).includes("+")|| displayPrevious.innerHTML.charAt(displayPrevious.innerHTML.length-1).includes("-") || displayPrevious.innerHTML.charAt(displayPrevious.innerHTML.length-1).includes("*")||displayPrevious.innerHTML.charAt(displayPrevious.innerHTML.length-1).includes("/")){
+                                    displayPrevious.innerHTML+=displayCurrent.innerHTML;
+                                    displayCurrent.innerHTML=math(displayPrevious);
+                                    displayPrevious.innerHTML=displayCurrent.innerHTML;
+                                    displayPrevious.innerHTML+=e.target.innerHTML;
+                                    displayCurrent.innerHTML+=e.target.innerHTML;
+                                   break;
+                                }
+                                else{
+                                    displayPrevious.innerHTML=displayCurrent.innerHTML; 
+                                    displayPrevious.innerHTML+=e.target.innerHTML;
+                                    displayCurrent.innerHTML+=e.target.innerHTML;
+                                    break; 
+                                }
+                            }
+
+                            case "=":
+                             if(displayCurrent.innerHTML=="0"){
+                                break;
+                             }                                               
+                             else{
+                                if(displayPrevious.innerHTML.includes("+")===false && displayPrevious.innerHTML.includes("-")===false && displayPrevious.innerHTML.includes("*")===false && displayPrevious.innerHTML.includes("/")===false){
+                                    displayCurrent.innerHTML=math(displayPrevious);
+                                    displayPrevious.innerHTML=displayCurrent.innerHTML;
+                                    break;
+                                }
+                                else{
+                                    displayPrevious.innerHTML+=displayCurrent.innerHTML;
+                                    displayCurrent.innerHTML=math(displayPrevious);
+                                    displayPrevious.innerHTML=displayCurrent.innerHTML;
+                                    break;
+                                }
+                             }
+            default:
+            if(displayCurrent.innerHTML==="0"){ 
+                displayCurrent.innerHTML="";
+                displayCurrent.innerHTML+=e.target.innerHTML;
+            }
+            else if( displayCurrent.innerHTML.includes("+") || displayCurrent.innerHTML.includes("-") || displayCurrent.innerHTML.includes("*") || displayCurrent.innerHTML.includes("/")){ 
+              displayCurrent.innerHTML="";
+              displayCurrent.innerHTML+=e.target.innerHTML;
+        }
+            else 
+                displayCurrent.innerHTML+=e.target.innerHTML;     
+    }  
+    });
+});
+function math(displayPrevious){
+    if(displayPrevious.innerHTML.includes("+")&& displayPrevious.innerHTML.length!==1){
+         let b=displayPrevious.innerHTML.indexOf("+");
+         num1=displayPrevious.innerHTML.slice(0,b);
+         num2=displayPrevious.innerHTML.slice(b+1,displayPrevious.innerHTML.length);
+         num1=parseFloat(num1);
+         num2=parseFloat(num2);
+         return add(num1,num2);
     }
-
-function calculator(){
-    console.log("Do the calculation");
-    console.log(num1);
-    switch (button) {
-        case operators.add:
-            buttonAdd.addEventListener("click",buttonAddClick);
-            opt=buttonAdd;
-            break;
-        case operators.subtract:
-          buttonSub.addEventListener("click",buttonSubClick);
-          op=buttonSub;
-        break;
-        case  operators.multiply:
-          buttonMul.addEventListener("click",buttonMulClick);
-          op=buttonMul;
-        break;
-        case operators.divide:
-          buttonDiv.addEventListener("click",buttonDivClick);
-          op=buttonDiv;
-        break;
+    else if(displayPrevious.innerHTML.includes("-")&& displayPrevious.innerHTML.length!==1 ){
+        let b=displayPrevious.innerHTML.indexOf("-");
+        num1=displayPrevious.innerHTML.slice(0,b);
+        num2=displayPrevious.innerHTML.slice(b+1,displayPrevious.innerHTML.length);
+        num1=parseFloat(num1);
+        num2=parseFloat(num2);
+       return sub(num1,num2);
+   }
+   else if(displayPrevious.innerHTML.includes("*")&& displayPrevious.innerHTML.length!==1){
+    let b=displayPrevious.innerHTML.indexOf("*");
+    num1=displayPrevious.innerHTML.slice(0,b);
+    num2=displayPrevious.innerHTML.slice(b+1,displayPrevious.innerHTML.length);
+    num1=parseFloat(num1);
+    num2=parseFloat(num2);
+    return mul(num1,num2);
+  }
+  else if(displayPrevious.innerHTML.includes("/")&& displayPrevious.innerHTML.length!==1){
+    let b=displayPrevious.innerHTML.indexOf("/");
+    num1=displayPrevious.innerHTML.slice(0,b);
+    num2=displayPrevious.innerHTML.slice(b+1,displayPrevious.innerHTML.length);
+    num1=parseFloat(num1);
+    num2=parseFloat(num2);
+    return div(num1,num2);
+}
+   else if(displayPrevious.innerHTML.includes("+")===false && displayPrevious.innerHTML.includes("-")===false && displayPrevious.innerHTML.includes("*")===false && displayPrevious.innerHTML.includes("/")===false){
+   num1=displayPrevious.innerHTML;
+   return add(num1,0);
+   }  
+}
+function add(num1,num2){
+    let a= num1+num2;
+    let int=parseInt(a);
+    let fl=parseFloat(a);
+    let rounded = parseFloat(a.toFixed(4));
+    if(int===fl){
+        return a;
     }
-    console.log(op);
-    console.log(num2);
-    //buttonEq.addEventListener("click",displayIT);
-    (num1 + op+ num2+ "=" + operate(op,num1,num2));
-    return operate(op,num1,num2);
+    return rounded;
 }
-
-function displayIT(){
-   display.innerHTML=num1 + op+ num2+ "=" + operate(op,num1,num2);
-    return operate(op,num1,num2);
-
+function sub(num1,num2){
+    let a= (num1)-(num2);
+    let int=parseInt(a);
+    let fl=parseFloat(a);
+    let rounded = parseFloat(a.toFixed(4));
+    if(int===fl){
+        return a;
+    }
+    return rounded;
 }
-function buttonAddClick(e){
-console.log(operators.add);
+function mul(num1,num2){
+    let a= num1*num2;
+    let int=parseInt(a);
+    let fl=parseFloat(a);
+    let rounded= parseFloat(a.toFixed(4));
+    if(int===fl){
+        return a;
+    }
+    return rounded;
 }
-function buttonSubClick(e){
-    return operators.subtract;
-}
-function buttonMulClick(e){
-    return operators.multiply;
-}
-
-function buttonDivClick(e){
-    return operators.divide;
-}
-function buttonClick(e){
-    return e.target.value;
+function div(num1,num2){
+    let a=num1/num2;
+    let int=parseInt(a);
+    let fl=parseFloat(a);
+    let rounded = parseFloat(a.toFixed(4));
+   
+    if(num1==0 && num2==0){
+        return "Undefined";
+    }
+    else if(int===fl){
+        return a;
+    }   
+    return rounded;
 }
 
 

@@ -1,0 +1,69 @@
+*{
+    font-family: Georgia, 'Times New Roman', Times, sans-serif;
+    font-weight: normal;
+    box-sizing: border-box;
+    font-weight: normal;
+}
+body{
+    padding:0;
+    margin:0;
+    background: linear-gradient( to right, rgb(255, 230, 0),rgb(220, 228, 145));
+}
+main{
+    display:flex;
+    flex-direction: column;
+    margin:200px;
+    margin-top: 80px;
+    margin-bottom:80px;
+}
+.buttons{
+    flex:1;
+}
+.display{
+    flex:1;
+}
+.row{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+button{
+    cursor: pointer;
+    font-size: 40px;
+    border: 1px solid rgb(0, 0, 0);
+    outline:none;
+    background-color: rgba(255,255,255,.75);
+    width: 99.3px;
+    height: 80px;
+}
+#inputEq{
+    width: 198px;
+}
+button:hover{
+    background-color: rgba(244, 241, 82, 0.9);
+}
+.display{
+   grid-column: 1/-1;
+    background-color:rgb(0, 0, 0);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-direction: column;
+    padding-left: 5px;
+    padding-right:5px;
+    padding-top: 10px;
+    word-wrap: break-word;
+    word-break: break-all;
+    margin:320px;
+    margin-bottom:0;
+    margin-top: 0;
+}
+.display .displayPrevious{
+    color: rgba(255, 255, 255, .75);
+    font-size: 1.5rem;
+}
+.display .displayCurrent{
+    color: white;
+    font-size: 2.5rem;
+}
+

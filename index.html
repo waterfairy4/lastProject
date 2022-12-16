@@ -6,21 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
     <link rel="stylesheet" href="calculator.css">
-    <script src="calculator.js"></script>
 </head>
 <body>
-    <label>Enter a number</label>
-    <br>
-    <input type="number">
-    <button type="button" id="submitButton">submit</button>
-    <br>
-    <button type="button"   class="buttonAdd">+</button>
-    <button type="button" class="buttonSub">+</button>
-    <button type="button"   class="buttonMul">*</button>
-    <button  type="button"  class="buttonDiv">/</button>
-    <button  type="button"  class="buttonEq">=</button>
-    <button  type="button"   class="buttonCl">Clear</button>
-    <p class="display"></p>
-    
+    <main>
+        <section class="display">
+            <p class="displayPrevious"></p>
+            <p class="displayCurrent">0</p>
+        </section>
+        <section class="buttons">
+            <section class="row">
+            <button class="functions"  id="inputClAll">C</button>
+            <button class="numbers"  id="inputSeven">7</button>
+            <button class="numbers"  id="inputEight">8</button>
+            <button class="numbers"  id="inputNine">9</button>
+            <button class="operators"  id="inputDiv">/</button>
+        </section>
+        <section class="row">
+            <button class="functions"  id="inputClOne">CE</button>
+            <button class="numbers"  id="inputFour">4</button>
+            <button class="numbers"  id="inputFive">5</button>
+            <button class="numbers"  id="inputSix">6</button>
+            <button class="operators"  id="inputMul">*</button>
+        </section>
+        <section class="row">
+            <button class="functions"  id="inputDot">.</button>
+            <button class="numbers"  id="inputOne">1</button>
+            <button class="numbers" type="button" id="inputTwo">2</button>
+            <button class="numbers" type="button" id="inputThree">3</button>
+            <button class="operators" type="button" id="inputSub">-</button>
+        </section>
+        <section class="row">
+            <button class="numbers"  id="inputZero">0</button>
+            <button class="numbers"  id="inputDoubleZero">00</button>
+            <button class="operators"  id="inputEq">=</button>
+            <button class="operators" id="inputAdd">+</button>
+        </section>
+        </section>
+    </main>
+    <script src="calculator.js"></script>
 </body>
 </html>
